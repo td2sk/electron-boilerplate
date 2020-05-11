@@ -1,0 +1,48 @@
+{
+  "name": "electron-boilerplate",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "run-s build:dist:dev start:dev",
+    "build": "run-s build:dist build:electron",
+    "build:dist": "cross-env NODE_ENV=production npm run build:dist:dev",
+    "build:dist:dev": "webpack --config build/webpack.config.js",
+    "build:electron": "cross-env NODE_ENV=production electron-builder .",
+    "start:dev": "run-p -r start:dev:*",
+    "start:dev:main": "webpack --watch --config build/webpack.config.main.js",
+    "start:dev:preload": "webpack --watch --config build/webpack.config.preload.js",
+    "start:dev:renderer": "webpack-dev-server --config build/webpack.config.renderer.js",
+    "start:dev:client": "wait-on http://localhost:8080 && nodemon --watch ./dist/main.js --watch ./dist/preload.js --exec electron .",
+    "clean": "rimraf ./dist"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
+    "eslint": "^7.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "nodemon": "^2.0.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "wait-on": "^5.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "build": {
+    "files": [
+      "dist/main.js",
+      "dist/index.html",
+      "dist/renderer.js",
+      "dist/preload.js"
+    ]
+  },
+  "dependencies": {
+    "electron-localshortcut": "^3.2.1"
+  }
+}
